@@ -16,5 +16,5 @@ jobs:
     - name: Build the Docker image
       run: |
         docker login docker.pkg.github.com -u USERNAME -p ${{ secrets.GITHUB_TOKEN }}
-        docker build --tag docker tag IMAGE_ID docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs .
+        docker build -t docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs .
         docker push docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs
