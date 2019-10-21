@@ -2,8 +2,8 @@ version: '3.3'
 
 services:
     app:
-        image: my/app
         build:
+            name: docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs:latest
             context: .
             dockerfile: Dockerfile
 
