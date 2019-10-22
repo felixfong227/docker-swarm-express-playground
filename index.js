@@ -8,7 +8,7 @@ client.on('error', err => console.error(`[REDDIS ERR]: ${err}`));
 
 let isServicesReady = false;
 
-app.all('*', (_req, res) => {
+app.all('*', (req, res) => {
     if(isServicesReady) {
         client.get(req.ip, (err, reply) => {
             if (err) {
