@@ -18,3 +18,6 @@ jobs:
         docker login docker.pkg.github.com -u USERNAME -p ${{ secrets.GITHUB_TOKEN }}
         docker build -t docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs .
         docker push docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs
+        docker tag docker.pkg.github.com/felixfong227/docker-swarm-express-playground/node-expressjs moongod101/docker-swarm-express-playground-node-express
+        docker login -u moongod101 -p ${{ secrets.DOCKER_HUB_PASSWORD}}
+        docker push moongod101/docker-swarm-express-playground-node-express
