@@ -6,11 +6,18 @@ const app = express();
 
 client.on('error', err => console.error(`[REDDIS ERR]: ${err}`));
 
-client.on('ready', () => {
-    console.log('Redis server is up and running');
-    app.get('/', (req, res) => {
+let isServicesReady = false;
+
+if(isServicesReady) {
+    app.all('/', (req, res) => {
         client.get(req.ip, (err, reply) => {
-            if (err) console.error(err);
+            if (err) {
+                console.error(err);
+                return res.json({
+                    error: true,
+                    message: 'Fail to access data from Redis cache server',
+                });
+            }
             if(reply === null) {
                 client.set(req.ip, 1);
             } else {
@@ -24,6 +31,18 @@ client.on('ready', () => {
             )
         });
     });
+} else {
+    app.all('/', (_req, res) => {
+        res.json({
+            error: true,
+            message: 'Please wait...services is being booting up',
+        });
+    });
+}
+
+client.on('ready', () => {
+    console.log('Redis server is up and running');
+    isServicesReady = true;
 });
 
 app.listen(8080, () => {
