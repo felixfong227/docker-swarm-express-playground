@@ -8,8 +8,8 @@ client.on('error', err => console.error(`[REDDIS ERR]: ${err}`));
 
 let isServicesReady = false;
 
-if(isServicesReady) {
-    app.all('/', (req, res) => {
+app.all('*', (_req, res) => {
+    if(isServicesReady) {
         client.get(req.ip, (err, reply) => {
             if (err) {
                 console.error(err);
@@ -30,15 +30,13 @@ if(isServicesReady) {
                 }
             )
         });
-    });
-} else {
-    app.all('/', (_req, res) => {
+    } else {
         res.json({
             error: true,
             message: 'Please wait...services is being booting up',
         });
-    });
-}
+    }
+});
 
 client.on('ready', () => {
     console.log('Redis server is up and running');
